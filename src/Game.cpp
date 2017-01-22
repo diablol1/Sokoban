@@ -1,9 +1,12 @@
 #include "Game.h"
 
 Game::Game() : window(sf::VideoMode(800, 600), "Sokoban", sf::Style::Close | sf::Style::Titlebar),
-	gameState(gs::GameStates::PLAY)
+	gameState(gs::GameStates::PLAY),
+	sceneManager(&textureCache)
 {
+	loadTextures();
 	window.setFramerateLimit(60);
+	sceneManager.loadLevelFromFile("data/levels/level1.lvl");
 }
 
 void Game::start()
@@ -11,9 +14,13 @@ void Game::start()
 	while (gameState != gs::GameStates::EXIT)
 	{
 		processEvents();
-		draw();
+		render();
 	}
 	window.close();
+}
+
+void Game::loadTextures()
+{
 }
 
 void Game::processEvents()
@@ -26,8 +33,9 @@ void Game::processEvents()
 	}
 }
 
-void Game::draw()
+void Game::render()
 {
 	window.clear();
+	window.draw(sceneManager);
 	window.display();
 }

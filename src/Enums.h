@@ -8,3 +8,14 @@ namespace gs
 		EXIT
 	};
 }
+
+namespace tt
+{
+	enum TileTypes
+	{
+		NONE,
+		WALL,
+		BOX,
+		FINISH
+	};
+}
