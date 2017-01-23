@@ -47,6 +47,28 @@ void SceneManager::loadLevelFromFile(const std::string & filename)
 	}
 }
 
+void SceneManager::processEvents(const sf::Event & event)
+{
+	if (event.type == sf::Event::KeyReleased)
+	{
+		switch (event.key.code)
+		{
+		case sf::Keyboard::Left:
+			player.move(-TileSize, 0);
+			break;
+		case sf::Keyboard::Right:
+			player.move(TileSize, 0);
+			break;
+		case sf::Keyboard::Up:
+			player.move(0, -TileSize);
+			break;
+		case sf::Keyboard::Down:
+			player.move(0, TileSize);
+			break;
+		}
+	}
+}
+
 void SceneManager::draw(sf::RenderTarget & target, sf::RenderStates states) const
 {
 	target.draw(player);

@@ -30,6 +30,8 @@ void Game::processEvents()
 	{
 		if (event.type == sf::Event::Closed)
 			gameState = gs::GameStates::EXIT;
+		else if (gameState == gs::GameStates::PLAY)
+			sceneManager.processEvents(event);
 	}
 }
 
