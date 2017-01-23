@@ -44,8 +44,12 @@ sf::Texture & TextureCache::get(const std::string & name)
 
 void TextureCache::loadTextures()
 {
-	add("player", "data/textures/player.png");
 	add("wall", "data/textures/wall.png");
 	add("box", "data/textures/box.png");
 	add("finishPoint", "data/textures/finishPoint.png");
+
+	add("playerLeft", "data/textures/player/playerLeft.png");
+	add("playerRight", "data/textures/player/playerRight.png");
+	add("playerUp", "data/textures/player/playerUp.png");
+	add("playerDown", "data/textures/player/playerDown.png");
 }

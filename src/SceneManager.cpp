@@ -3,7 +3,7 @@
 
 SceneManager::SceneManager(TextureCache* _textureCache) : textureCache(_textureCache)
 {
-	player.setTexture(_textureCache->get("player"));
+	player.setTexture(_textureCache->get("playerRight"));
 }
 
 void SceneManager::loadLevelFromFile(const std::string & filename)
@@ -55,15 +55,19 @@ void SceneManager::processEvents(const sf::Event & event)
 		{
 		case sf::Keyboard::Left:
 			player.move(-TileSize, 0);
+			player.setTexture(textureCache->get("playerLeft"));
 			break;
 		case sf::Keyboard::Right:
 			player.move(TileSize, 0);
+			player.setTexture(textureCache->get("playerRight"));
 			break;
 		case sf::Keyboard::Up:
 			player.move(0, -TileSize);
+			player.setTexture(textureCache->get("playerUp"));
 			break;
 		case sf::Keyboard::Down:
 			player.move(0, TileSize);
+			player.setTexture(textureCache->get("playerDown"));
 			break;
 		}
 	}
