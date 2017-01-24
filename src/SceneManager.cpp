@@ -17,26 +17,10 @@ void SceneManager::loadLevelFromFile(const std::string & filename)
 	sf::Vector2i loadCounter = sf::Vector2i(0, 0);
 	while (!file.eof())
 	{
-		std::string str;
-		file >> str;
+		int tileType;
+		file >> tileType;
 
-		sf::Sprite tileToAdd;
-		tileToAdd.setPosition(loadCounter.x  * TileSize, loadCounter.y * TileSize);
-		switch (std::stoi(str))
-		{
-		case tt::TileTypes::WALL:
-			tileToAdd.setTexture(textureCache->get("wall"));
-			walls.push_back(tileToAdd);
-			break;
-		case tt::TileTypes::BOX:
-			tileToAdd.setTexture(textureCache->get("box"));
-			boxes.push_back(tileToAdd);
-			break;
-		case tt::TileTypes::FINISH:
-			tileToAdd.setTexture(textureCache->get("finishPoint"));
-			finishPoints.push_back(tileToAdd);
-			break;
-		}
+		tiles[loadCounter.x][loadCounter.y] = Tile(static_cast<tt::TileTypes>(tileType), loadCounter);
 
 		loadCounter.x++;
 		if (file.peek() == '\n')
@@ -76,16 +60,12 @@ void SceneManager::processEvents(const sf::Event & event)
 void SceneManager::draw(sf::RenderTarget & target, sf::RenderStates states) const
 {
 	target.draw(player);
-	for (auto const& wall : walls)
+
+	for (auto const& column : tiles)
 	{
-		target.draw(wall);
-	}
-	for (auto const& box : boxes)
-	{
-		target.draw(box);
-	}
-	for (auto const& finishPoint : finishPoints)
-	{
-		target.draw(finishPoint);
-	}
+		for (auto const& tile : column.second)
+		{
+			target.draw(tile.second);
+		}
+	}//iteration through std::map of std::map
 }

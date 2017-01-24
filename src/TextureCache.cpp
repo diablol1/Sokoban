@@ -9,7 +9,7 @@ bool TextureCache::add(const std::string& _name, const std::string & _filename)
 	{
 		if (texture.first == _name)
 		{
-			std::cerr << "Texture manager couldn't add texture with this same name: " +
+			std::cerr << "Texture manager couldn't add texture with this same name: " <<
 				_name << std::endl;
 			return  false;
 		}
@@ -21,7 +21,7 @@ bool TextureCache::add(const std::string& _name, const std::string & _filename)
 	{
 		if (path == _filename)
 		{
-			std::cerr << "Texture manager couldn't add this same texture: " +
+			std::cerr << "Texture manager couldn't add this same texture: " <<
 				_filename << std::endl;
 			return false;
 		}

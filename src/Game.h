@@ -19,8 +19,6 @@ private:
 
 	SceneManager sceneManager;
 
-	void loadTextures();
-
 	void processEvents();
 	void render();
 };

@@ -6,6 +6,8 @@
 
 #include "Enums.h"
 #include "TextureCache.h"
+#include "Tile.h"
+#include <map>
 
 class SceneManager : public sf::Drawable
 {
@@ -18,10 +20,9 @@ private:
 	const int TileSize = 64;
 	TextureCache* textureCache;
 
+	std::map<unsigned int, std::map<unsigned int, Tile>> tiles;
+
 	sf::Sprite player;
-	std::vector<sf::Sprite> walls;
-	std::vector<sf::Sprite> boxes;
-	std::vector<sf::Sprite> finishPoints;
 
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 };

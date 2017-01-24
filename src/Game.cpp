@@ -1,10 +1,11 @@
-#include "Game.h"
+#include "Game.h" 
 
 Game::Game() : window(sf::VideoMode(800, 600), "Sokoban", sf::Style::Close | sf::Style::Titlebar),
 	gameState(gs::GameStates::PLAY),
 	sceneManager(&textureCache)
 {
-	loadTextures();
+	Tile::textureCache = &textureCache;
+
 	window.setFramerateLimit(60);
 	sceneManager.loadLevelFromFile("data/levels/level1.lvl");
 }
@@ -17,10 +18,6 @@ void Game::start()
 		render();
 	}
 	window.close();
-}
-
-void Game::loadTextures()
-{
 }
 
 void Game::processEvents()
