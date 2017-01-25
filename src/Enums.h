@@ -11,11 +11,22 @@ namespace gs
 
 namespace tt
 {
-	enum TileTypes
+	enum class TileTypes
 	{
 		NONE,
 		WALL,
 		BOX,
 		FINISH
+	};
+}
+
+namespace dt
+{
+	enum class Directions
+	{
+		LEFT,
+		RIGHT,
+		UP,
+		DOWN
 	};
 }

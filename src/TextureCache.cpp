@@ -47,6 +47,7 @@ void TextureCache::loadTextures()
 	add("wall", "data/textures/wall.png");
 	add("box", "data/textures/box.png");
 	add("finishPoint", "data/textures/finishPoint.png");
+	add("none", "data/textures/none.png");
 
 	add("playerLeft", "data/textures/player/playerLeft.png");
 	add("playerRight", "data/textures/player/playerRight.png");

@@ -15,6 +15,7 @@ void Game::start()
 	while (gameState != gs::GameStates::EXIT)
 	{
 		processEvents();
+		update();
 		render();
 	}
 	window.close();
@@ -30,6 +31,11 @@ void Game::processEvents()
 		else if (gameState == gs::GameStates::PLAY)
 			sceneManager.processEvents(event);
 	}
+}
+
+void Game::update()
+{
+	sceneManager.detectCollisions();
 }
 
 void Game::render()
