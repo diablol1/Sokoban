@@ -14,6 +14,9 @@ void Tile::setType(const tt::TileTypes & newType)
 	type = newType;
 	switch (newType)
 	{
+	case tt::TileTypes::NONE:
+		sprite.setTexture(textureCache->get("none"));
+		break;
 	case tt::TileTypes::WALL:
 		sprite.setTexture(textureCache->get("wall"));
 		break;
@@ -23,7 +26,7 @@ void Tile::setType(const tt::TileTypes & newType)
 	case tt::TileTypes::FINISH:
 		sprite.setTexture(textureCache->get("finishPoint"));
 		break;
-	case tt::TileTypes::NONE:
-		sprite.setTexture(textureCache->get("none"));
+	case tt::TileTypes::BOX_ON_FINISH:
+		sprite.setTexture(textureCache->get("redBox"));
 	}
 }

@@ -58,39 +58,56 @@ void SceneManager::processEvents(const sf::Event & event)
 void SceneManager::detectCollisions()
 {
 	Tile *tileUnderPlayer = &tiles[player.getPositionInTiles().x][player.getPositionInTiles().y];
-
 	if (tileUnderPlayer->getType() == tt::TileTypes::WALL)
 		player.undoMove();
-	else if (tileUnderPlayer->getType() == tt::TileTypes::BOX)
-	{
-		Tile *nextTile = nullptr;
-		switch (player.getCurrentDirection())
-		{
-		case dt::Directions::LEFT:
-			nextTile = &tiles[tileUnderPlayer->getPositionInTiles().x - 1][tileUnderPlayer->getPositionInTiles().y];
-			break;
-		case dt::Directions::RIGHT:
-			nextTile = &tiles[tileUnderPlayer->getPositionInTiles().x + 1][tileUnderPlayer->getPositionInTiles().y];
-			break;
-		case dt::Directions::UP:
-			nextTile = &tiles[tileUnderPlayer->getPositionInTiles().x][tileUnderPlayer->getPositionInTiles().y - 1];
-			break;
-		case dt::Directions::DOWN:
-			nextTile = &tiles[tileUnderPlayer->getPositionInTiles().x][tileUnderPlayer->getPositionInTiles().y + 1];
-			break;
-		}
-		std::cout << static_cast<int>(nextTile->getType());
 
+	Tile *nextTile = nullptr;
+	switch (player.getCurrentDirection())
+	{
+	case dt::Directions::LEFT:
+		nextTile = &tiles[tileUnderPlayer->getPositionInTiles().x - 1][tileUnderPlayer->getPositionInTiles().y];
+		break;
+	case dt::Directions::RIGHT:
+		nextTile = &tiles[tileUnderPlayer->getPositionInTiles().x + 1][tileUnderPlayer->getPositionInTiles().y];
+		break;
+	case dt::Directions::UP:
+		nextTile = &tiles[tileUnderPlayer->getPositionInTiles().x][tileUnderPlayer->getPositionInTiles().y - 1];
+		break;
+	case dt::Directions::DOWN:
+		nextTile = &tiles[tileUnderPlayer->getPositionInTiles().x][tileUnderPlayer->getPositionInTiles().y + 1];
+		break;
+	}
+
+	if (tileUnderPlayer->getType() == tt::TileTypes::BOX)
+	{
 		if (nextTile->getType() == tt::TileTypes::NONE)
 		{
-			nextTile->setType(tt::TileTypes::BOX);
 			tileUnderPlayer->setType(tt::TileTypes::NONE);
+			nextTile->setType(tt::TileTypes::BOX);
+		}
+		else if (nextTile->getType() == tt::TileTypes::FINISH)
+		{
+			tileUnderPlayer->setType(tt::TileTypes::NONE);
+			nextTile->setType(tt::TileTypes::BOX_ON_FINISH);
 		}
 		else
 			player.undoMove();
 	}
-	else
-		std::cout << 0;
+	else if (tileUnderPlayer->getType() == tt::TileTypes::BOX_ON_FINISH)
+	{
+		if (nextTile->getType() == tt::TileTypes::NONE)
+		{
+			tileUnderPlayer->setType(tt::TileTypes::FINISH);
+			nextTile->setType(tt::TileTypes::BOX);
+		}
+		else if (nextTile->getType() == tt::TileTypes::FINISH)
+		{
+			tileUnderPlayer->setType(tt::TileTypes::FINISH);
+			nextTile->setType(tt::TileTypes::BOX_ON_FINISH);
+		}
+		else
+			player.undoMove();
+	}
 }
 
 void SceneManager::draw(sf::RenderTarget & target, sf::RenderStates states) const

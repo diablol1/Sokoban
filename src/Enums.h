@@ -16,7 +16,8 @@ namespace tt
 		NONE,
 		WALL,
 		BOX,
-		FINISH
+		FINISH,
+		BOX_ON_FINISH
 	};
 }
 

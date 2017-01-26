@@ -46,6 +46,7 @@ void TextureCache::loadTextures()
 {
 	add("wall", "data/textures/wall.png");
 	add("box", "data/textures/box.png");
+	add("redBox", "data/textures/redBox.png");
 	add("finishPoint", "data/textures/finishPoint.png");
 	add("none", "data/textures/none.png");
 
