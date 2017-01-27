@@ -2,8 +2,9 @@
 
 Game::Game() : window(sf::VideoMode(800, 600), "Sokoban", sf::Style::Close | sf::Style::Titlebar),
 	gameState(gs::GameStates::PLAY),
-	sceneManager(&textureCache)
+	sceneManager(&textureCache, font)
 {
+	font.loadFromFile("data/font.ttf");
 	Tile::textureCache = &textureCache;
 
 	window.setFramerateLimit(60);

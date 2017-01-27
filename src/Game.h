@@ -12,6 +12,8 @@ public:
 	void start();
 private:
 
+	sf::Font font;
+
 	gs::GameStates gameState;
 	sf::RenderWindow window;
 

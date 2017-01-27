@@ -1,9 +1,11 @@
 #include "SceneManager.h"
 #include <iostream>
 
-SceneManager::SceneManager(TextureCache* _textureCache) :
+SceneManager::SceneManager(TextureCache* _textureCache, const sf::Font& font) :
 	textureCache(_textureCache),
-	player(textureCache, Tile::Size)
+	player(textureCache, Tile::Size, &movesCounter),
+	pushesCounter("PUSHES: ", sf::Vector2f(600, 560), font),
+	movesCounter("MOVES: ", sf::Vector2f(80, 560), font)
 {
 	
 }
@@ -35,7 +37,7 @@ void SceneManager::loadLevelFromFile(const std::string & filename)
 
 void SceneManager::processEvents(const sf::Event & event)
 {
-	if (event.type == sf::Event::KeyReleased)
+	if (event.type == sf::Event::KeyPressed)
 	{
 		switch (event.key.code)
 		{
@@ -84,11 +86,13 @@ void SceneManager::detectCollisions()
 		{
 			tileUnderPlayer->setType(tt::TileTypes::NONE);
 			nextTile->setType(tt::TileTypes::BOX);
+			pushesCounter++;
 		}
 		else if (nextTile->getType() == tt::TileTypes::FINISH)
 		{
 			tileUnderPlayer->setType(tt::TileTypes::NONE);
 			nextTile->setType(tt::TileTypes::BOX_ON_FINISH);
+			pushesCounter++;
 		}
 		else
 			player.undoMove();
@@ -99,11 +103,13 @@ void SceneManager::detectCollisions()
 		{
 			tileUnderPlayer->setType(tt::TileTypes::FINISH);
 			nextTile->setType(tt::TileTypes::BOX);
+			pushesCounter++;
 		}
 		else if (nextTile->getType() == tt::TileTypes::FINISH)
 		{
 			tileUnderPlayer->setType(tt::TileTypes::FINISH);
 			nextTile->setType(tt::TileTypes::BOX_ON_FINISH);
+			pushesCounter++;
 		}
 		else
 			player.undoMove();
@@ -120,4 +126,7 @@ void SceneManager::draw(sf::RenderTarget & target, sf::RenderStates states) cons
 		}
 	} //iteration through std::map of std::map
 	target.draw(player);
+	
+	target.draw(movesCounter);
+	target.draw(pushesCounter);
 }

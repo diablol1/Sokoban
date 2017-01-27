@@ -2,12 +2,12 @@
 
 #include "Enums.h"
 #include "TextureCache.h"
-#include <iostream>
+#include "Counter.h"
 
 class Player : public sf::Drawable
 {
 public:
-	Player(TextureCache* _textureCache, const int _TileSize);
+	Player(TextureCache* _textureCache, const int _TileSize, Counter* _movesCounter);
 
 	void move(const dt::Directions& newDirection);
 	void undoMove();
@@ -25,6 +25,8 @@ private:
 	const int TileSize;
 	sf::Sprite sprite;
 	TextureCache* textureCache;
+
+	Counter* movesCounter;
 
 	dt::Directions currentDirection;
 
