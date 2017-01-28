@@ -5,7 +5,8 @@ SceneManager::SceneManager(TextureCache* _textureCache, const sf::Font& font) :
 	textureCache(_textureCache),
 	player(textureCache, Tile::Size, &movesCounter),
 	pushesCounter("PUSHES: ", sf::Vector2f(600, 560), font),
-	movesCounter("MOVES: ", sf::Vector2f(80, 560), font)
+	movesCounter("MOVES: ", sf::Vector2f(80, 560), font),
+	currentLevel("LEVEL: ", sf::Vector2f(20, 50), font)
 {
 	
 }
@@ -55,12 +56,11 @@ void SceneManager::loadLevelFromFile(const std::string & filename)
 
 void SceneManager::changeLevelToNext()
 {
-	static int currentLevel;
 	currentLevel++;
-	std::string filePath = "data/levels/level" + std::to_string(currentLevel) + ".lvl";
+	std::string filePath = "data/levels/level" + currentLevel.toString() + ".lvl";
 	if (!std::experimental::filesystem::exists(filePath))
 	{
-		currentLevel = 0;
+		currentLevel.reset();
 		changeLevelToNext();
 	}
 	else
@@ -182,4 +182,5 @@ void SceneManager::draw(sf::RenderTarget & target, sf::RenderStates states) cons
 	
 	target.draw(movesCounter);
 	target.draw(pushesCounter);
+	target.draw(currentLevel);
 }

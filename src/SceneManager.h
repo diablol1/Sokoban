@@ -29,6 +29,7 @@ private:
 
 	Counter pushesCounter;
 	Counter movesCounter;
+	Counter currentLevel;
 
 	void loadLevelFromFile(const std::string& filename);
 

@@ -13,6 +13,9 @@ public:
 	Counter operator--(int);
 
 	void reset();
+	std::string toString() {
+		return std::to_string(number);
+	}
 private:
 	int number;
 
