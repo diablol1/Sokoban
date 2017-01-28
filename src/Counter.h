@@ -9,20 +9,10 @@ public:
 		const sf::Vector2f& position,
 		const sf::Font& font);
 
-	Counter operator++(int)
-	{
-		Counter copy(*this);
-		number++;
-		update();
-		return copy;
-	}
-	Counter operator--(int)
-	{
-		Counter copy(*this);
-		number--;
-		update();
-		return copy;
-	}
+	Counter operator++(int);
+	Counter operator--(int);
+
+	void reset();
 private:
 	int number;
 

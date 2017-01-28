@@ -21,14 +21,15 @@ void SceneManager::update(const sf::Event& event)
 	{
 		detectCollisions();
 		if (isEnd())
-			changeLevelToNext();
+		{
+			reset();
+			changeLevelToNext(); 
+		}
 	}
 }
 
 void SceneManager::loadLevelFromFile(const std::string & filename)
 {
-	tiles.clear();
-
 	std::ifstream file(filename);
 
 	std::string x, y;
@@ -159,6 +160,13 @@ bool SceneManager::isEnd()
 		}
 	}
 	return true;
+}
+
+void SceneManager::reset()
+{
+	tiles.clear();
+	movesCounter.reset();
+	pushesCounter.reset();
 }
 
 void SceneManager::draw(sf::RenderTarget & target, sf::RenderStates states) const

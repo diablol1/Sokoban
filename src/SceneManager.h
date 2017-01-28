@@ -35,6 +35,7 @@ private:
 	bool processEvents(const sf::Event& event);
 	void detectCollisions();
 	bool isEnd();
+	void reset();
 
 	void changeLevelToNext();
 
