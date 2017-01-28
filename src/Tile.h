@@ -17,7 +17,7 @@ public:
 	sf::Vector2i getPositionInTiles() const {
 		return sf::Vector2i(sprite.getPosition().x / Size, sprite.getPosition().y / Size);
 	}
-	tt::TileTypes getType() {
+	tt::TileTypes getType() const {
 		return type;
 	}
 	void setType(const tt::TileTypes& newType);

@@ -22,6 +22,5 @@ private:
 	SceneManager sceneManager;
 
 	void processEvents();
-	void update();
 	void render();
 };

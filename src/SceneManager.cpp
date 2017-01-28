@@ -10,8 +10,25 @@ SceneManager::SceneManager(TextureCache* _textureCache, const sf::Font& font) :
 	
 }
 
+void SceneManager::init()
+{
+	changeLevelToNext();
+}
+
+void SceneManager::update(const sf::Event& event)
+{
+	if (processEvents(event))
+	{
+		detectCollisions();
+		if (isEnd())
+			changeLevelToNext();
+	}
+}
+
 void SceneManager::loadLevelFromFile(const std::string & filename)
 {
+	tiles.clear();
+
 	std::ifstream file(filename);
 
 	std::string x, y;
@@ -35,7 +52,21 @@ void SceneManager::loadLevelFromFile(const std::string & filename)
 	}
 }
 
-void SceneManager::processEvents(const sf::Event & event)
+void SceneManager::changeLevelToNext()
+{
+	static int currentLevel;
+	currentLevel++;
+	std::string filePath = "data/levels/level" + std::to_string(currentLevel) + ".lvl";
+	if (!std::experimental::filesystem::exists(filePath))
+	{
+		currentLevel = 0;
+		changeLevelToNext();
+	}
+	else
+		loadLevelFromFile(filePath);
+}
+
+bool SceneManager::processEvents(const sf::Event& event)
 {
 	if (event.type == sf::Event::KeyPressed)
 	{
@@ -43,18 +74,19 @@ void SceneManager::processEvents(const sf::Event & event)
 		{
 		case sf::Keyboard::Left:
 			player.move(dt::Directions::LEFT);
-			break;
+			return true;
 		case sf::Keyboard::Right:
 			player.move(dt::Directions::RIGHT);
-			break;
+			return true;
 		case sf::Keyboard::Up:
 			player.move(dt::Directions::UP);
-			break;
+			return true;
 		case sf::Keyboard::Down:
 			player.move(dt::Directions::DOWN);
-			break;
+			return true;
 		}
 	}
+	return false;
 }
 
 void SceneManager::detectCollisions()
@@ -114,6 +146,19 @@ void SceneManager::detectCollisions()
 		else
 			player.undoMove();
 	}
+}
+
+bool SceneManager::isEnd()
+{
+	for (auto const& column : tiles)
+	{
+		for (auto const& tile : column.second)
+		{
+			if (tile.second.getType() == tt::TileTypes::FINISH)
+				return false;
+		}
+	}
+	return true;
 }
 
 void SceneManager::draw(sf::RenderTarget & target, sf::RenderStates states) const

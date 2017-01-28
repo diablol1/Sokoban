@@ -3,6 +3,7 @@
 #include <string>
 #include <fstream>
 #include <map>
+#include <experimental/filesystem>
 
 #include <SFML/Graphics.hpp>
 
@@ -14,16 +15,12 @@
 
 class SceneManager : public sf::Drawable
 {
-public:
-
+public:	
 	SceneManager(TextureCache* _textureCache, const sf::Font& font);
 
-	void loadLevelFromFile(const std::string& filename);
-	void processEvents(const sf::Event& event);
-	void detectCollisions();
-
+	void init();
+	void update(const sf::Event& event);
 private:
-
 	TextureCache* textureCache;
 
 	std::map<unsigned int, std::map<unsigned int, Tile>> tiles;
@@ -32,6 +29,14 @@ private:
 
 	Counter pushesCounter;
 	Counter movesCounter;
+
+	void loadLevelFromFile(const std::string& filename);
+
+	bool processEvents(const sf::Event& event);
+	void detectCollisions();
+	bool isEnd();
+
+	void changeLevelToNext();
 
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 };

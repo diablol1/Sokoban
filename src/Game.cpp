@@ -4,11 +4,12 @@ Game::Game() : window(sf::VideoMode(800, 600), "Sokoban", sf::Style::Close | sf:
 	gameState(gs::GameStates::PLAY),
 	sceneManager(&textureCache, font)
 {
+	window.setFramerateLimit(60);
+
 	font.loadFromFile("data/font.ttf");
 	Tile::textureCache = &textureCache;
 
-	window.setFramerateLimit(60);
-	sceneManager.loadLevelFromFile("data/levels/level1.lvl");
+	sceneManager.init();
 }
 
 void Game::start()
@@ -16,7 +17,6 @@ void Game::start()
 	while (gameState != gs::GameStates::EXIT)
 	{
 		processEvents();
-		update();
 		render();
 	}
 	window.close();
@@ -30,13 +30,8 @@ void Game::processEvents()
 		if (event.type == sf::Event::Closed)
 			gameState = gs::GameStates::EXIT;
 		else if (gameState == gs::GameStates::PLAY)
-			sceneManager.processEvents(event);
+			sceneManager.update(event);
 	}
-}
-
-void Game::update()
-{
-	sceneManager.detectCollisions();
 }
 
 void Game::render()
