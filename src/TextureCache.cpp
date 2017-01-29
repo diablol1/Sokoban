@@ -36,7 +36,6 @@ sf::Texture & TextureCache::get(const std::string & name)
 	if (textures.find(name) == textures.end())
 	{
 		std::cerr << name << " texture doesn't exist!" << std::endl;
-		return sf::Texture();
 	}
 	else
 		return textures[name];

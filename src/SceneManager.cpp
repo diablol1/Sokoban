@@ -54,11 +54,24 @@ void SceneManager::loadLevelFromFile(const std::string & filename)
 	}
 }
 
+bool SceneManager::fileExists (const std::string& filePath)
+{
+    std::ifstream file;
+    file.open(filePath.c_str());
+    if ( file.is_open() )
+    {
+        file.close();
+        return true;
+    }
+    file.close();
+    return false;
+}
+
 void SceneManager::changeLevelToNext()
 {
 	currentLevel++;
 	std::string filePath = "data/levels/level" + currentLevel.toString() + ".lvl";
-	if (!std::experimental::filesystem::exists(filePath))
+	if (!fileExists(filePath))
 	{
 		currentLevel.reset();
 		changeLevelToNext();

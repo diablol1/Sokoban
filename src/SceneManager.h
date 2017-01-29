@@ -32,6 +32,7 @@ private:
 	Counter currentLevel;
 
 	void loadLevelFromFile(const std::string& filename);
+	bool fileExists (const std::string& filePath);
 
 	bool processEvents(const sf::Event& event);
 	void detectCollisions();
